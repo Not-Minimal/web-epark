@@ -1,6 +1,8 @@
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("../utils/jwt");
+const { decodedToken, createAccessToken } = require('../utils/jwt');
+
 
 async function register(request, response) {
   const { firstname, lastname, email, password } = request.body;
@@ -70,5 +72,36 @@ async function login(request, response) {
     response.status(500).send({ msg: "Error del servidor" });
   }
 }
+async function refreshAccessToken(request, response) {
+  const { token } = request.body;
+  console.log("Refresh Token:", token); // Add this line for debugging
+  if (!token) {
+    response.status(404).send({ msg: "No se ha encontrado el token" });
+    return; // Ensure to return after sending the response
+  }
+  const decodedTokenResult = jwt.decodedToken(token);
+  console.log("Decoded Token Result:", decodedTokenResult); // Add this line for debugging
+  if (!decodedTokenResult) {
+    response.status(400).send({ msg: "Token inválido" });
+    return; // Ensure to return after sending the response
+  }
+  const { user_id } = decodedTokenResult;
+  console.log("User ID:", user_id); // Add this line for debugging
+  try {
+    const userStore = await User.findOne({ _id: user_id });
+    if (!userStore) {
+      response.status(404).send({ msg: "El usuario no existe" });
+    } else {
+      response.status(200).send({
+        accessToken: jwt.createAccessToken(userStore),
+      });
+    }
+  } catch (error) {
+    response.status(500).send({ msg: "Error del servidor" });
+  }
+}
 
-module.exports = { register, login };
+
+
+
+module.exports = { register, login, refreshAccessToken };
