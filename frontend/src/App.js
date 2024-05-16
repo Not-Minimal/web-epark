@@ -9,11 +9,13 @@ function App() {
     nombre: "Saul",
     edad: 24,
     color: "Azul"
-  }
+  };
 
-  const saludarFn = name => {
-    console.log("Hola " + name);
-  }
+  const saludarFn = (nombre, edad) => {
+    console.log("Hola " + nombre + " tiene " + edad + " años");
+    console.log(`Hola ${nombre} tiene ${edad} años`);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
