@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "author": "Saul Muñoz",
   "license": "MIT",
   "dependencies": {
     "express": "^4.19.2",
-    "mongoose": "^8.3.5"
+    "mongoose": "^8.3.5",
+    "nodemon": "^3.1.0"
   }
 }
