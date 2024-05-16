@@ -3,6 +3,13 @@ import './App.css';
 import Saludar from './components/Saludar';
 
 function App() {
+
+
+  const user = {
+    nombre: "Saul",
+    edad: 24,
+    color: "Azul"
+  }
   return (
     <div className="App">
       <header className="App-header">
@@ -18,8 +25,7 @@ function App() {
         >
           Learn React
         </a>
-        <Saludar name="Saul Muñoz" edad="24" />
-        <Saludar name="Jessenia Martinez" edad="22" />
+        <Saludar userInfo={user} />
       </header>
     </div>
   );
