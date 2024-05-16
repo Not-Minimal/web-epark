@@ -1,6 +1,5 @@
 import logo from './logo.svg';
 import './App.css';
-import Saludar from './components/Saludar';
 
 function App() {
   return (
@@ -18,8 +17,6 @@ function App() {
         >
           Learn React
         </a>
-        <Saludar name="Saul Muñoz" />
-        <Saludar name="Jessenia Martinez" />
       </header>
     </div>
   );
