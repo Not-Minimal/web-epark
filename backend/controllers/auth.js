@@ -4,4 +4,4 @@ function register(request, response) {
   response.status(200).send({ msg: "Todo OK" });
 }
 
-module.exports = { register };
+module.exports = { register, };
