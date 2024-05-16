@@ -1,6 +1,7 @@
 //Importar Express
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const { API_VERSION } = require('./constants');
 
 // Inicializar Express
@@ -17,7 +18,7 @@ app.use(bodyParser.json());
 app.use(express.static('uploads'));
 
 // Configure HTTP headers - CORS
-
+app.use(cors());
 // Configure routings
 // ...
 
