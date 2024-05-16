@@ -5,7 +5,7 @@ export default function Saludar(props) {
 
   return (
     <div>
-      <h2> Hola {props.name}, como estas?</h2>
+      <h2> Hola {props.name}, tienes {props.edad} años</h2>
     </div>
   )
 }

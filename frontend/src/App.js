@@ -18,8 +18,8 @@ function App() {
         >
           Learn React
         </a>
-        <Saludar name="Saul Muñoz" />
-        <Saludar name="Jessenia Martinez" />
+        <Saludar name="Saul Muñoz" edad="24" />
+        <Saludar name="Jessenia Martinez" edad="22" />
       </header>
     </div>
   );
