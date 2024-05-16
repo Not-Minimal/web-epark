@@ -1,11 +1,10 @@
 import React from 'react';
 
 export default function Saludar(props) {
-  console.log(props.userInfo);
-
+  console.log(props);
   return (
     <div>
-      <h2> Hola {props.userInfo.nombre}, tienes {props.userInfo.edad} años y color fav {props.userInfo.color}</h2>
+      <button onClick={() => props.saludarFn(props.userInfo.nombre)}>Saludar</button>
     </div>
   )
 }
