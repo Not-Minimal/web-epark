@@ -1,4 +1,6 @@
 const User = require('../models/user');
+
+
 async function getMe(req, res) {
   const { user_id } = req.user;
 
@@ -10,4 +12,18 @@ async function getMe(req, res) {
   }
 }
 
-module.exports = { getMe };
+async function getUsers(req, res) {
+  //Obtener Query Params
+  const { active } = req.query;
+  let response = null;
+
+  if (active === undefined) {
+    response = await User.find();
+  } else {
+    response = await User.find({ active });
+  }
+  res.status(200).send({ response });
+
+}
+
+module.exports = { getMe, getUsers };
