@@ -99,5 +99,25 @@ async function updateUser(req, res) {
     res.status(500).send({ msg: "Error al actualizar el usuario" });
   }
 }
+/**
+ * Elimina un usuario de la base de datos.
+ *
+ * @param {Object} req - El objeto de solicitud HTTP.
+ * @param {Object} res - El objeto de respuesta HTTP.
+ */
+async function deleteUser(req, res) {
+  const { id } = req.params;
 
-module.exports = { getMe, getUsers, createUser, updateUser };
+  try {
+    const userDeleted = await User.findByIdAndDelete(id);
+    if (!userDeleted) {
+      res.status(404).send({ msg: "Usuario no encontrado" });
+    } else {
+      res.status(200).send({ msg: "Usuario eliminado correctamente" });
+    }
+  } catch (err) {
+    res.status(500).send({ msg: "Error del servidor" });
+  }
+}
+
+module.exports = { getMe, getUsers, createUser, updateUser, deleteUser };
