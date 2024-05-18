@@ -37,8 +37,6 @@ async function getMenus(req, res) {
 async function updateMenu(req, res) {
   const { id } = req.params;
   const menuData = req.body;
-
-
   try {
     const updateMenu = await Menu.findByIdAndUpdate({ _id: id }, menuData, { new: true });
     if (!updateMenu) {
@@ -49,15 +47,6 @@ async function updateMenu(req, res) {
   } catch (error) {
     res.status(500).send({ msg: 'Error al actualizar el menu' });
   }
-
-
-  // Menu.findByIdAndUpdate({ _id: id }, menuData, (error) => {
-  //   if (error) {
-  //     res.status(400).send({ msg: 'Error al actualizar el menu' });
-  //   } else {
-  //     res.status(200).send({ msg: 'Menu actualizado correctamente' });
-  //   }
-  // });
 }
 
 module.exports = {
