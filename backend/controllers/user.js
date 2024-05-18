@@ -65,5 +65,39 @@ async function createUser(req, res) {
     res.status(500).send({ msg: "Error del servidor / el correo debe ser unico" });
   }
 }
+/**
+ * Actualiza un usuario existente en la base de datos.
+ *
+ * @param {Object} req - El objeto de solicitud HTTP.
+ * @param {Object} res - El objeto de respuesta HTTP.
+ */
+async function updateUser(req, res) {
+  const { id } = req.params;
+  const userData = req.body;
 
-module.exports = { getMe, getUsers, createUser };
+  if (userData.password) {
+    const salt = bcrypt.genSaltSync(10);
+    const hashPassword = bcrypt.hashSync(userData.password, salt);
+    userData.password = hashPassword;
+  } else {
+    delete userData.password;
+  }
+
+  if (req.files && req.files.avatar) {
+    const imagePath = image.getFilePath(req.files.avatar);
+    userData.avatar = imagePath;
+  }
+
+  try {
+    const updatedUser = await User.findByIdAndUpdate(id, userData, { new: true });
+    if (!updatedUser) {
+      res.status(404).send({ msg: "Usuario no encontrado" });
+    } else {
+      res.status(200).send({ msg: "Usuario actualizado correctamente", user: updatedUser });
+    }
+  } catch (error) {
+    res.status(500).send({ msg: "Error al actualizar el usuario" });
+  }
+}
+
+module.exports = { getMe, getUsers, createUser, updateUser };
