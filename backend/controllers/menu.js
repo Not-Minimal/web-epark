@@ -17,6 +17,22 @@ async function createMenu(req, res) {
   }
 }
 
+async function getMenus(req, res) {
+  const { active } = req.body;
+
+  try {
+    if (active === undefined) {
+      response = await Menu.find().sort({ order: 'asc' });
+    } else {
+      response = await Menu.find({ active }).sort({ order: 'asc' });
+    }
+    res.status(200).send({ response });
+  } catch (error) {
+    res.status(500).send({ msg: 'No se encuentra el menu' });
+  }
+
+}
+
 module.exports = {
-  createMenu,
+  createMenu, getMenus
 };
