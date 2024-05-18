@@ -18,9 +18,10 @@ async function createMenu(req, res) {
 }
 
 async function getMenus(req, res) {
-  const { active } = req.body;
+  const { active } = req.query;
 
   try {
+    let response = null;
     if (active === undefined) {
       response = await Menu.find().sort({ order: 'asc' });
     } else {
@@ -33,6 +34,32 @@ async function getMenus(req, res) {
 
 }
 
+async function updateMenu(req, res) {
+  const { id } = req.params;
+  const menuData = req.body;
+
+
+  try {
+    const updateMenu = await Menu.findByIdAndUpdate({ _id: id }, menuData, { new: true });
+    if (!updateMenu) {
+      res.status(404).send({ msg: 'Menu no encontrado' });
+    } else {
+      res.status(200).send({ msg: 'Menu actualizado correctamente', menu: updateMenu });
+    }
+  } catch (error) {
+    res.status(500).send({ msg: 'Error al actualizar el menu' });
+  }
+
+
+  // Menu.findByIdAndUpdate({ _id: id }, menuData, (error) => {
+  //   if (error) {
+  //     res.status(400).send({ msg: 'Error al actualizar el menu' });
+  //   } else {
+  //     res.status(200).send({ msg: 'Menu actualizado correctamente' });
+  //   }
+  // });
+}
+
 module.exports = {
-  createMenu, getMenus
+  createMenu, getMenus, updateMenu,
 };
