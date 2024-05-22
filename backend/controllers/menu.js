@@ -49,6 +49,20 @@ async function updateMenu(req, res) {
   }
 }
 
+async function deleteMenu(request, response) {
+  const { id } = request.params;
+  try {
+    const deleteMenu = await Menu.findByIdAndDelete(id);
+    if (!deleteMenu) {
+      response.status(404).send({ msg: "Menu no encontrado" });
+    } else {
+      response.status(200).send({ msg: "Menu eliminado correctamente" });
+    }
+  } catch (error) {
+    response.status(500).send({ msg: "Error del servidor" });
+  }
+}
+
 module.exports = {
-  createMenu, getMenus, updateMenu,
+  createMenu, getMenus, updateMenu, deleteMenu,
 };
