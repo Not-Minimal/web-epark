@@ -8,5 +8,8 @@ const api = express.Router();
 
 
 // Routes
+api.post('/post', [md_auth.asureAuth, md_updload], PostController.createPost);
+api.get('/post', PostController.getPosts);
+api.patch('/post/:id', [md_auth.asureAuth, md_updload], PostController.updatePost);
 
 module.exports = api;
