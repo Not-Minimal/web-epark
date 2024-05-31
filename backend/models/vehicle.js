@@ -17,4 +17,4 @@ const VehicleSchema = mongoose.Schema({
   year: Number
 });
 
-module.exports = mongoose.model("Vehicle", VehicleSchema);
+module.exports = mongoose.model("vehicle", VehicleSchema);

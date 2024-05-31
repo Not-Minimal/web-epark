@@ -15,6 +15,8 @@ const menuRoutes = require('./router/menu');
 const courseRoutes = require('./router/course');
 const postRoutes = require('./router/post');
 const nesletterRoutes = require('./router/newsletter');
+// Importar el router de vehículos
+const vehicleRoutes = require('./router/vehicle');
 
 // Configure Body Parse
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -33,6 +35,8 @@ app.use(`/api/${API_VERSION}`, menuRoutes);
 app.use(`/api/${API_VERSION}`, courseRoutes);
 app.use(`/api/${API_VERSION}`, postRoutes);
 app.use(`/api/${API_VERSION}`, nesletterRoutes);
+// Agregar el router de vehículos a la configuración de Express
+app.use(`/api/${API_VERSION}`, vehicleRoutes);
 
 // exportar Express
 module.exports = app;
