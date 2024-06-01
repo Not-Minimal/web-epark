@@ -9,6 +9,20 @@ async function getVehicles(req, res) {
   }
 }
 
+// async function getVehicle(req, res) {
+//   const { path } = req.params;
+
+//   try {
+//     const vehicleStored = await Vehicle.findOne({ path });
+//     if (!vehicleStored) {
+//       return res.status(404).send({ msg: 'Vehículo no encontrado' });
+//     }
+//     res.status(200).send({ vehicle: vehicleStored });
+//   } catch (error) {
+//     res.status(500).send({ msg: 'Error del servidor' });
+//   }
+// }
+
 async function getVehicle(req, res) {
   const { id } = req.params;
 

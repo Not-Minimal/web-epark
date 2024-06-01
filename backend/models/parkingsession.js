@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const ParkingSessionSchema = mongoose.Schema({
   vehicle: {
@@ -22,4 +23,5 @@ const ParkingSessionSchema = mongoose.Schema({
   }
 });
 
+ParkingSessionSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model("ParkingSession", ParkingSessionSchema);

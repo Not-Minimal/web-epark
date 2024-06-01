@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const PaymentSchema = mongoose.Schema({
   parkingSession: {
@@ -17,4 +18,5 @@ const PaymentSchema = mongoose.Schema({
   }
 });
 
+PaymentSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model("Payment", PaymentSchema);
