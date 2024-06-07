@@ -12,7 +12,7 @@ export default class Settings extends Component {
             className="rounded-lg border bg-card text-card-foreground shadow-sm"
             data-v0-t="card"
           >
-            <div className="flex flex-col space-y-1.5 p-6">
+            <div className="flex flex-col space-y-4 p-6">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -47,7 +47,7 @@ export default class Settings extends Component {
             className="rounded-lg border bg-card text-card-foreground shadow-sm"
             data-v0-t="card"
           >
-            <div className="flex flex-col space-y-1.5 p-6">
+            <div className="flex flex-col space-y-4 p-6">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -82,7 +82,7 @@ export default class Settings extends Component {
             className="rounded-lg border bg-card text-card-foreground shadow-sm"
             data-v0-t="card"
           >
-            <div className="flex flex-col space-y-1.5 p-6">
+            <div className="flex flex-col space-y-4 p-6">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -117,7 +117,7 @@ export default class Settings extends Component {
             className="rounded-lg border bg-card text-card-foreground shadow-sm"
             data-v0-t="card"
           >
-            <div className="flex flex-col space-y-1.5 p-6">
+            <div className="flex flex-col space-y-4 p-6">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -152,7 +152,7 @@ export default class Settings extends Component {
             className="rounded-lg border bg-card text-card-foreground shadow-sm"
             data-v0-t="card"
           >
-            <div className="flex flex-col space-y-1.5 p-6">
+            <div className="flex flex-col space-y-4 p-6">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
