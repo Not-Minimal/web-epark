@@ -185,52 +185,6 @@ export default class Dashboard extends Component {
                     <circle cx="11" cy="11" r="8"></circle>
                     <path d="m21 21-4.3-4.3"></path>
                   </svg>
-                  <input
-                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
-                    type="search"
-                    placeholder="Search orders..."
-                    autofill-information="overall type: UNKNOWN_TYPE
-html type: HTML_TYPE_UNSPECIFIED
-server type: NO_SERVER_DATA
-heuristic type: UNKNOWN_TYPE
-label: Search orders...
-parseable name:
-section: -default
-field signature: 260277693
-form signature: 16580616546556282947
-form signature in host form: 17037822953625054417
-alternative form signature: 7624788199369085673
-field frame token: F4AD32A2608D52F30DD6FF1F2BAB6F7D
-form renderer id: 347
-field renderer id: 352
-visible: false
-focusable: false
-field rank: 0
-field rank in signature group: 0
-field rank in host form: 0
-field rank in host form signature group: 0"
-                    title="overall type: UNKNOWN_TYPE
-html type: HTML_TYPE_UNSPECIFIED
-server type: NO_SERVER_DATA
-heuristic type: UNKNOWN_TYPE
-label: Search orders...
-parseable name:
-section: -default
-field signature: 260277693
-form signature: 16580616546556282947
-form signature in host form: 17037822953625054417
-alternative form signature: 7624788199369085673
-field frame token: F4AD32A2608D52F30DD6FF1F2BAB6F7D
-form renderer id: 347
-field renderer id: 352
-visible: false
-focusable: false
-field rank: 0
-field rank in signature group: 0
-field rank in host form: 0
-field rank in host form signature group: 0"
-                    autofill-prediction="UNKNOWN_TYPE"
-                  />
                 </div>
               </form>
             </div>

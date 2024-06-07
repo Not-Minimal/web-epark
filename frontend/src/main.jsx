@@ -6,6 +6,7 @@ import Navigation from "./components/Navigation.jsx";
 import CreateUser from "./components/CreateUser.jsx";
 import CreateVehicle from "./components/CreateVehicle.jsx";
 import Dashboard from "./components/Dashboard";
+import Settings from "./components/Settings.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -13,8 +14,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Navigation />
       <Routes>
         <Route path="/" exact element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/create" element={<CreateUser />} />
         <Route path="/create/vehicle" element={<CreateVehicle />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
     </Router>
   </React.StrictMode>
