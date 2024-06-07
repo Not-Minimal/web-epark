@@ -1,4 +1,5 @@
 import { Component } from "react";
+import { Link } from "react-router-dom";
 
 export default class Navigation extends Component {
   render() {
@@ -29,30 +30,30 @@ export default class Navigation extends Component {
           <span className="sr-only">Parking Dashboard</span>
         </a>
         <nav className="hidden gap-6 text-sm font-medium text-gray-400 md:flex">
-          <a
-            href="#"
+          <Link
+            to="/dashboard"
             className="inline-flex h-8 items-center justify-center rounded-md px-4 transition-colors hover:bg-gray-800 hover:text-gray-50 focus:bg-gray-800 focus:text-gray-50 focus:outline-none"
           >
             Dashboard
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            to="/vehicles"
             className="inline-flex h-8 items-center justify-center rounded-md px-4 transition-colors hover:bg-gray-800 hover:text-gray-50 focus:bg-gray-800 focus:text-gray-50 focus:outline-none"
           >
-            Vehicles
-          </a>
-          <a
-            href="#"
+            Vehiculos
+          </Link>
+          <Link
+            to="/parking-lots"
             className="inline-flex h-8 items-center justify-center rounded-md px-4 transition-colors hover:bg-gray-800 hover:text-gray-50 focus:bg-gray-800 focus:text-gray-50 focus:outline-none"
           >
-            Parking Lots
-          </a>
-          <a
+            Bloques
+          </Link>
+          <Link
+            to="/settings"
             className="inline-flex h-8 items-center justify-center rounded-md px-4 transition-colors hover:bg-gray-800 hover:text-gray-50 focus:bg-gray-800 focus:text-gray-50 focus:outline-none"
-            href="#"
           >
-            Settings
-          </a>
+            Ajustes
+          </Link>
         </nav>
       </header>
     );
