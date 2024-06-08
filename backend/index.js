@@ -1,25 +1,28 @@
-const mongoose = require("mongoose");
-const app = require('./app');
-const { DB_USER, DB_PASSWORD, DB_HOST, IP_SERVER, API_VERSION } = require('./constants');
-
-const PORT = process.env.POST || 3977;
-
+const express = require('express');
+const mongoose = require('mongoose');
 const cors = require('cors');
+const app = express(); // Crea una instancia de la aplicación Express
 
-app.use(cors({
-  credentials: true,
-  origin: 'http://localhost:3977/api/v1/post',
-}));
+// Importa las configuraciones y rutas necesarias
+const { DB_USER, DB_PASSWORD, DB_HOST, IP_SERVER, API_VERSION } = require('./constants');
+const userRouter = require('./router/user');
 
-app.get('/test', (req, res) => {
-  res.json('Test ok');
-});
+const PORT = process.env.PORT || 3977;
 
+// Configura middleware
+app.use(express.json());
+app.use(cors());
+
+// Configura las rutas
+app.use('/api', userRouter);
+
+// Conexión a la base de datos MongoDB
 mongoose.connect(
   `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/?retryWrites=true&w=majority&appName=web-epark`
 )
   .then(() => {
-    app.listen(PORT, () => { // Corrected 'port' to 'PORT'
+    // Inicia el servidor
+    app.listen(PORT, () => {
       console.log("#############################################");
       console.log("##### API RESTful#########");
       console.log(`http://${IP_SERVER}:${PORT}/api/${API_VERSION}`);

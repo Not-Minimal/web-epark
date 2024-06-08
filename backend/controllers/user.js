@@ -35,26 +35,33 @@ async function getUsers(req, res) {
 
 async function createUser(req, res) {
   // Extrae la contraseña del cuerpo de la solicitud
-  const { password } = req.body;
-  // Crea una nueva instancia de usuario con los datos proporcionados
-  const user = new User({
-    ...req.body,
-    active: false, // Inicialmente, el usuario no está activo
-  });
-  // Genera una sal para el hash de la contraseña
-  const salt = bcrypt.genSaltSync(10);
-  // Genera el hash de la contraseña
-  const hashPassword = bcrypt.hashSync(password, salt);
-  // Asigna la contraseña hasheada al usuario
-  user.password = hashPassword;
-  // Si hay un archivo de avatar en la solicitud, procesa el avatar
-  if (req.files && req.files.avatar) {
-    const imagePath = image.getFilePath(req.files.avatar);
-    user.avatar = imagePath;
-
-  }
+  const { email, password } = req.body;
 
   try {
+    // Verificar si el correo electrónico ya existe en la base de datos
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ error: 'El correo electrónico ya está en uso' });
+    }
+
+    // Si el correo electrónico no existe, crea un nuevo usuario
+    const user = new User({
+      ...req.body,
+      active: false, // Inicialmente, el usuario no está activo
+    });
+
+    // Genera una sal para el hash de la contraseña
+    const salt = bcrypt.genSaltSync(10);
+    // Genera el hash de la contraseña
+    const hashPassword = bcrypt.hashSync(password, salt);
+    // Asigna la contraseña hasheada al usuario
+    user.password = hashPassword;
+    // Si hay un archivo de avatar en la solicitud, procesa el avatar
+    if (req.files && req.files.avatar) {
+      const imagePath = image.getFilePath(req.files.avatar);
+      user.avatar = imagePath;
+    }
+
     // Guarda el usuario en la base de datos
     const userStored = await user.save();
 
@@ -62,9 +69,11 @@ async function createUser(req, res) {
     res.status(200).send({ user: userStored });
   } catch (error) {
     // En caso de error, envía una respuesta de error del servidor
-    res.status(500).send({ msg: "Error del servidor / el correo debe ser unico" });
+    console.error(error);
+    res.status(500).send({ error: 'Error del servidor' });
   }
 }
+
 /**
  * Actualiza un usuario existente en la base de datos.
  *

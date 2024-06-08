@@ -4,13 +4,49 @@ import axios from "axios";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
+  const [firstname, setFirstName] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState();
 
-  function registerUser(e) {
+  async function registerUser(e) {
     e.preventDefault();
-    axios.get("/post");
+
+    // Validar que se ingresen un nombre, un correo electrónico y una contraseña
+    if (!firstname || !email || !password) {
+      setError(
+        "Por favor, ingresa un nombre, un correo electrónico y una contraseña."
+      );
+      return;
+    }
+
+    // Validar la contraseña
+    const passwordRegex = /^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9]{6,}$/;
+    if (!passwordRegex.test(password)) {
+      setError(
+        "La contraseña debe tener al menos 6 caracteres, incluyendo letras y números."
+      );
+      return;
+    }
+
+    try {
+      const response = await axios.post("http://localhost:3977/api/user", {
+        firstname,
+        email,
+        password,
+      });
+      console.log("Usuario creado exitosamente:", response.data);
+      // Aquí puedes redirigir al usuario a la página de inicio de sesión o a otra página
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.error) {
+        setError(error.response.data.error);
+      } else {
+        setError(
+          "Error del servidor. Por favor, inténtalo de nuevo más tarde."
+        );
+      }
+    }
   }
+
   return (
     <div className="flex flex-col min-h-screen">
       <header className="flex items-center gap-2 p-8 lg:px-6">
@@ -52,15 +88,15 @@ export default function Signup() {
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-gray-500 dark:text-gray-400"
                   htmlFor="name"
                 >
-                  Name
+                  Nombre
                 </label>
                 <input
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-1"
                   id="name"
-                  placeholder="Enter your name"
+                  placeholder="Ingresa tu nombre"
                   type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  value={firstname}
+                  onChange={(e) => setFirstName(e.target.value)}
                 />
               </div>
               <div>
@@ -73,7 +109,7 @@ export default function Signup() {
                 <input
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-1"
                   id="email"
-                  placeholder="Enter your email"
+                  placeholder="Ingresa tu email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -84,12 +120,12 @@ export default function Signup() {
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-gray-500 dark:text-gray-400"
                   htmlFor="password"
                 >
-                  Password
+                  Contraseña
                 </label>
                 <input
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-1"
                   id="password"
-                  placeholder="Enter your password"
+                  placeholder="Ingresa tu contraseña"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -99,12 +135,13 @@ export default function Signup() {
                 className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full"
                 type="submit"
               >
-                Sign Up
+                Regístrate
               </button>
+              {error && <p className="text-red-500">{error}</p>}
             </form>
             <div className="flex items-center justify-between">
-              <div>Tienes una cuenta?</div>
-              <Link to="/login" className=" underline ">
+              <div>¿Tienes una cuenta?</div>
+              <Link to="/login" className="underline">
                 Iniciar Sesión
               </Link>
             </div>
