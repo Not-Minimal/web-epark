@@ -4,6 +4,17 @@ const { DB_USER, DB_PASSWORD, DB_HOST, IP_SERVER, API_VERSION } = require('./con
 
 const PORT = process.env.POST || 3977;
 
+const cors = require('cors');
+
+app.use(cors({
+  credentials: true,
+  origin: 'http://localhost:3977/api/v1/post',
+}));
+
+app.get('/test', (req, res) => {
+  res.json('Test ok');
+});
+
 mongoose.connect(
   `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/?retryWrites=true&w=majority&appName=web-epark`
 )

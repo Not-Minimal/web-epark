@@ -11,6 +11,8 @@ import Orders from "./components/Orders.jsx";
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import axios from "axios";
+axios.defaults.baseURL = "http://localhost:3977/api/v1";
 
 // Layout component to wrap routes with Navigation
 const Layout = ({ children }) => (
