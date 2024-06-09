@@ -48,8 +48,8 @@ export default function Signup() {
 
   return (
     <div className="flex flex-col items-center min-h-screen">
-      <header className="flex items-center gap-2 p-8 lg:px-6 ">
-        <a className="flex items-center gap-2" rel="ugc">
+      <header className="flex items-center gap-2 p-8 lg:px-6">
+        <div className="flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -68,10 +68,10 @@ export default function Signup() {
             <path d="M19 9a7 7 0 1 0-13.6 2.3C6.4 14.4 8 19 8 19h8s1.6-4.6 2.6-7.7c.3-.8.4-1.5.4-2.3"></path>
             <path d="M12 19v3"></path>
           </svg>
-          <Link to="/" className="text-xl font-bold ">
+          <Link to="/" className="text-xl font-bold">
             E-Park
           </Link>
-        </a>
+        </div>
       </header>
 
       <main className="flex-grow">
@@ -87,13 +87,13 @@ export default function Signup() {
               <div>
                 <label
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-gray-500 dark:text-gray-400"
-                  htmlFor="name"
+                  htmlFor="firstname"
                 >
                   Nombre
                 </label>
                 <input
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-1"
-                  id="name"
+                  id="firstname"
                   placeholder="Ingresa tu nombre"
                   type="text"
                   value={firstname}
@@ -104,18 +104,18 @@ export default function Signup() {
               <div>
                 <label
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-gray-500 dark:text-gray-400"
-                  htmlFor="name"
+                  htmlFor="lastname"
                 >
                   Apellidos
                 </label>
                 <input
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-1"
-                  id="name"
-                  placeholder="Ingresa tu nombre"
+                  id="lastname"
+                  placeholder="Ingresa tu apellido"
                   type="text"
                   value={lastname}
                   onChange={(e) => setLastName(e.target.value)}
-                  autoComplete="on"
+                  autoComplete="off"
                 />
               </div>
 

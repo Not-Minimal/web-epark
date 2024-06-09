@@ -34,9 +34,9 @@ export default function Login() {
   }
 
   return (
-    <div className="flex flex-col items-center min-h-screen">
+    <div className="flex flex-col items-center min-h-screen ">
       <header className="flex items-center gap-2 p-8 lg:px-6">
-        <a className="flex items-center gap-2" rel="ugc">
+        <div className="flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -58,16 +58,16 @@ export default function Login() {
           <Link to="/" className="text-xl font-bold">
             E-Park
           </Link>
-        </a>
+        </div>
       </header>
 
-      <main className="flex-grow">
+      <main className="flex-grow ">
         <div className="flex min-h-full items-center justify-center p-8">
           <div className="max-w-md w-full space-y-6 bg-gray-50 dark:bg-gray-800 p-8 rounded-lg">
             <div className="space-y-2 text-center">
               <h2 className="text-3xl font-bold">Iniciar Sesión</h2>
               <p className="text-gray-500 dark:text-gray-400">
-                Inicia sesión para continuar.
+                Inicia sesión para comenzar a usar la aplicación E-Park.
               </p>
             </div>
             <form className="space-y-4" onSubmit={loginUser}>
@@ -113,9 +113,9 @@ export default function Login() {
               {error && <p className="text-red-500">{error}</p>}
             </form>
             <div className="flex items-center justify-between">
-              <span>¿No tienes una cuenta?</span>
-              <Link to="/register" className="underline">
-                Regístrate
+              <span>¿Tienes una cuenta?</span>
+              <Link to="/signup" className="underline">
+                Crear Cuenta
               </Link>
             </div>
           </div>
