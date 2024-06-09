@@ -31,8 +31,14 @@ async function register(request, response) {
 }
 async function login(request, response) {
   const { email, password } = request.body;
-  if (!email) response.status(400).send({ msg: "El email es obligatorio" });
-  if (!password) response.status(400).send({ msg: "La contraseña es obligatoria" });
+  if (!email) {
+    response.status(400).send({ msg: "El email es obligatorio" });
+    return; // Agregar return para evitar continuar la ejecución
+  }
+  if (!password) {
+    response.status(400).send({ msg: "La contraseña es obligatoria" });
+    return; // Agregar return para evitar continuar la ejecución
+  }
 
   const emailLowerCase = email.toLowerCase();
 
@@ -40,44 +46,30 @@ async function login(request, response) {
     const userStore = await User.findOne({ email: emailLowerCase });
     if (!userStore) {
       response.status(404).send({ msg: "El usuario no existe" });
-      return;
-      console.log("Password:" + password);
-      console.log(userStore);
+      return; // Agregar return para evitar continuar la ejecución
     }
-    console.log("Password:" + password);
-    console.log(userStore);
 
     const passwordIsValid = bcrypt.compareSync(password, userStore.password);
     if (!passwordIsValid) {
       response.status(401).send({ msg: "Contraseña incorrecta" });
-      return;
-      console.log("Password:" + password);
-      console.log(userStore);
+      return; // Agregar return para evitar continuar la ejecución
     } else if (!userStore.active) {
       response.status(401).send({ msg: "El usuario no está activo" });
-      return;
-      console.log("");
+      return; // Agregar return para evitar continuar la ejecución
     }
-    console.log("Password:" + password);
-    console.log(userStore);
 
     const accessToken = jwt.createAccessToken(userStore);
     const refreshToken = jwt.createRefreshToken(userStore);
     response.status(200).send({
-      accessToken: jwt.createAccessToken(userStore),
-      refreshToken: jwt.createRefreshToken(userStore),
-    });
-
-    response.cookie('accessToken', accessToken, {
-      httpOnly: true,
-      sameSite: "none",
-      secure: true,
+      accessToken: accessToken,
+      refreshToken: refreshToken,
     });
 
   } catch (error) {
     response.status(500).send({ msg: "Error del servidor" });
   }
 }
+
 async function refreshAccessToken(request, response) {
   const { token } = request.body;
   console.log("Refresh Token:", token); // Add this line for debugging
