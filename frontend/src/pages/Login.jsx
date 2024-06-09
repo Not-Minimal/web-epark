@@ -35,9 +35,9 @@ export default function Login() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <header className="flex items-center gap-2 p-8 lg:px-6">
-        <a className="flex items-center gap-2" href="#" rel="ugc">
+    <div className="flex flex-col items-center min-h-screen">
+      <header className="flex items-center gap-2 p-8 lg:px-6 ">
+        <a className="flex items-center gap-2" rel="ugc">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -50,10 +50,11 @@ export default function Login() {
             strokeLinejoin="round"
             className="h-6 w-6"
           >
-            <path d="M15 7h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2"></path>
-            <path d="M6 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h1"></path>
-            <path d="m11 7-3 5h4l-3 5"></path>
-            <line x1="22" x2="22" y1="11" y2="13"></line>
+            <path d="M9 9a3 3 0 1 1 6 0"></path>
+            <path d="M12 12v3"></path>
+            <path d="M11 15h2"></path>
+            <path d="M19 9a7 7 0 1 0-13.6 2.3C6.4 14.4 8 19 8 19h8s1.6-4.6 2.6-7.7c.3-.8.4-1.5.4-2.3"></path>
+            <path d="M12 19v3"></path>
           </svg>
           <Link to="/" className="text-xl font-bold ">
             E-Park

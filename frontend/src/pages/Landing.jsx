@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default class Landing extends Component {
   render() {
     return (
-      <div className="flex flex-col min-h-[100dvh]">
+      <div className="flex flex-col items-center min-h-[100dvh]">
         <header className="flex items-center gap-2 p-8 lg:px-6 ">
           <a className="flex items-center gap-2" rel="ugc">
             <svg
@@ -19,33 +19,16 @@ export default class Landing extends Component {
               strokeLinejoin="round"
               className="h-6 w-6"
             >
-              <path d="M15 7h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2"></path>
-              <path d="M6 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h1"></path>
-              <path d="m11 7-3 5h4l-3 5"></path>
-              <line x1="22" x2="22" y1="11" y2="13"></line>
+              <path d="M9 9a3 3 0 1 1 6 0"></path>
+              <path d="M12 12v3"></path>
+              <path d="M11 15h2"></path>
+              <path d="M19 9a7 7 0 1 0-13.6 2.3C6.4 14.4 8 19 8 19h8s1.6-4.6 2.6-7.7c.3-.8.4-1.5.4-2.3"></path>
+              <path d="M12 19v3"></path>
             </svg>
             <Link to="/" className="text-xl font-bold ">
               E-Park
             </Link>
           </a>
-          <nav className="ml-auto flex gap-4 sm:gap-6 items-center">
-            <a
-              className="text-sm font-medium hover:underline underline-offset-4"
-              rel="ugc"
-            ></a>
-            <Link
-              to="/login"
-              className="inline-flex justify-center items-center py-3 px-4 text-base font-medium text-center text-white rounded-lg bg-green-500 hover:bg-green-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900 "
-            >
-              Iniciar Sesión
-            </Link>
-            <Link
-              to="/signup"
-              className="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-            >
-              Crear Cuenta
-            </Link>
-          </nav>
         </header>
         <main className="flex-1">
           <section id="Hero2" className="bg-white dark:bg-black">
