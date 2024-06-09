@@ -29,7 +29,7 @@ export default function Signup() {
     try {
       const response = await axios.post("/user", {
         firstname,
-        email,
+        email: email.toLowerCase(),
         password,
       });
       console.log("Usuario creado exitosamente:", response.data);
