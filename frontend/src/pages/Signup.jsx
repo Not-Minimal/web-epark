@@ -11,7 +11,6 @@ export default function Signup() {
   async function registerUser(e) {
     e.preventDefault();
 
-    // Validar que se ingresen un nombre, un correo electrónico y una contraseña
     if (!firstname || !email || !password) {
       setError(
         "Por favor, ingresa un nombre, un correo electrónico y una contraseña."
@@ -19,7 +18,6 @@ export default function Signup() {
       return;
     }
 
-    // Validar la contraseña
     const passwordRegex = /^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9]{6,}$/;
     if (!passwordRegex.test(password)) {
       setError(
@@ -29,13 +27,12 @@ export default function Signup() {
     }
 
     try {
-      const response = await axios.post("http://localhost:3977/api/user", {
+      const response = await axios.post("/user", {
         firstname,
         email,
         password,
       });
       console.log("Usuario creado exitosamente:", response.data);
-      // Aquí puedes redirigir al usuario a la página de inicio de sesión o a otra página
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
         setError(error.response.data.error);
@@ -50,7 +47,7 @@ export default function Signup() {
   return (
     <div className="flex flex-col min-h-screen">
       <header className="flex items-center gap-2 p-8 lg:px-6">
-        <a className="flex items-center gap-2" href="#" rel="ugc">
+        <div className="flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -68,11 +65,12 @@ export default function Signup() {
             <path d="m11 7-3 5h4l-3 5"></path>
             <line x1="22" x2="22" y1="11" y2="13"></line>
           </svg>
-          <Link to="/" className="text-xl font-bold ">
+          <Link to="/" className="text-xl font-bold">
             E-Park
           </Link>
-        </a>
+        </div>
       </header>
+
       <main className="flex-grow">
         <div className="flex min-h-full items-center justify-center p-8">
           <div className="max-w-md w-full space-y-6 bg-gray-50 dark:bg-gray-800 p-8 rounded-lg">
@@ -97,6 +95,7 @@ export default function Signup() {
                   type="text"
                   value={firstname}
                   onChange={(e) => setFirstName(e.target.value)}
+                  autoComplete="on"
                 />
               </div>
               <div>
@@ -113,6 +112,7 @@ export default function Signup() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  autoComplete="on"
                 />
               </div>
               <div>
@@ -140,7 +140,7 @@ export default function Signup() {
               {error && <p className="text-red-500">{error}</p>}
             </form>
             <div className="flex items-center justify-between">
-              <div>¿Tienes una cuenta?</div>
+              <span>¿Tienes una cuenta?</span>
               <Link to="/login" className="underline">
                 Iniciar Sesión
               </Link>

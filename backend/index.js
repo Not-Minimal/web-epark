@@ -1,30 +1,32 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const app = express(); // Crea una instancia de la aplicación Express
-
-// Importa las configuraciones y rutas necesarias
+const mongoose = require("mongoose");
+const app = require('./app');
 const { DB_USER, DB_PASSWORD, DB_HOST, IP_SERVER, API_VERSION } = require('./constants');
-const userRouter = require('./router/user');
 
-const PORT = process.env.PORT || 3977;
+const PORT = process.env.POST || 3977;
 
-// Configura middleware
-app.use(express.json());
-app.use(cors());
+// Importar y configurar CORS
+const cors = require('cors');
 
-// Configura las rutas
-app.use('/api', userRouter);
+// Configuración de CORS para permitir solicitudes desde el frontend y desde Insomnia
+app.use(cors({
+  credentials: true,
+  origin: ['http://localhost:5173', 'http://localhost:3977', 'http://localhost:3977/api/v1'],
+}));
 
-// Conexión a la base de datos MongoDB
+// Ruta de prueba para verificar que el servidor está funcionando
+app.get('/test', (req, res) => {
+  res.json('Test ok');
+});
+
+// Conectar a la base de datos MongoDB
 mongoose.connect(
   `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/?retryWrites=true&w=majority&appName=web-epark`
 )
   .then(() => {
-    // Inicia el servidor
+    // Iniciar el servidor una vez que la conexión a la base de datos sea exitosa
     app.listen(PORT, () => {
       console.log("#############################################");
-      console.log("##### API RESTful#########");
+      console.log("##### API RESTful #########");
       console.log(`http://${IP_SERVER}:${PORT}/api/${API_VERSION}`);
     });
   })
