@@ -29,6 +29,7 @@ export default function Login() {
       navigate("/orders");
     } catch (error) {
       console.error("Error al autenticar al usuario:", error);
+      alert("Solicita tu acceso a epark@gmail.com");
       setError("Error al autenticar al usuario");
     }
   }
