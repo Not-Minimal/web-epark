@@ -18,6 +18,7 @@ app.get('/test', (req, res) => {
   res.json('Test ok');
 });
 
+
 // Conectar a la base de datos MongoDB
 mongoose.connect(
   `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/?retryWrites=true&w=majority&appName=web-epark`

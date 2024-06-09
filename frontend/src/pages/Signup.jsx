@@ -5,15 +5,16 @@ import axios from "axios";
 export default function Signup() {
   const [email, setEmail] = useState("");
   const [firstname, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState();
 
   async function registerUser(e) {
     e.preventDefault();
 
-    if (!firstname || !email || !password) {
+    if (!firstname || !lastname || !email || !password) {
       setError(
-        "Por favor, ingresa un nombre, un correo electrónico y una contraseña."
+        "Por favor, ingresa tu nombre, apellido, correo electrónico y contraseña."
       );
       return;
     }
@@ -29,6 +30,7 @@ export default function Signup() {
     try {
       const response = await axios.post("/user", {
         firstname,
+        lastname,
         email: email.toLowerCase(),
         password,
       });
@@ -99,6 +101,24 @@ export default function Signup() {
                   autoComplete="on"
                 />
               </div>
+              <div>
+                <label
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-gray-500 dark:text-gray-400"
+                  htmlFor="name"
+                >
+                  Apellidos
+                </label>
+                <input
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-1"
+                  id="name"
+                  placeholder="Ingresa tu nombre"
+                  type="text"
+                  value={lastname}
+                  onChange={(e) => setLastName(e.target.value)}
+                  autoComplete="on"
+                />
+              </div>
+
               <div>
                 <label
                   className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-gray-500 dark:text-gray-400"

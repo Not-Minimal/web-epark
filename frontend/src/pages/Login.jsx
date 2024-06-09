@@ -12,13 +12,14 @@ export default function Login() {
 
     // Validar que se ingresen un correo electrónico y una contraseña
     if (!email || !password) {
-      // setError("Por favor, ingresa un correo electrónico y una contraseña.");
+      setError("Por favor, ingresa un correo electrónico y una contraseña.");
       return;
     }
 
     try {
       const response = await axios.post(
-        "http://localhost:3977/api/user/login",
+        "/auth/login",
+        // Reemplaza PUERTO y VERSION con los valores correctos
         {
           email,
           password,

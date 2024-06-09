@@ -13,6 +13,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import axios from "axios";
 axios.defaults.baseURL = "http://localhost:3977/api/v1";
+// axios.defaults.withCredentials = true;
 
 // Layout component to wrap routes with Navigation
 const Layout = ({ children }) => (

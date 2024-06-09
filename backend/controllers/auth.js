@@ -68,6 +68,12 @@ async function login(request, response) {
       refreshToken: jwt.createRefreshToken(userStore),
     });
 
+    response.cookie('accessToken', accessToken, {
+      httpOnly: true,
+      sameSite: "none",
+      secure: true,
+    });
+
   } catch (error) {
     response.status(500).send({ msg: "Error del servidor" });
   }
