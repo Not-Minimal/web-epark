@@ -35,8 +35,8 @@ export default function Login() {
   }
 
   return (
-    <div className="flex flex-col items-center min-h-screen ">
-      <header className="flex items-center gap-2 p-8 lg:px-6">
+    <div className="flex flex-col min-h-screen ">
+      <header className="flex items-center justify-center  gap-2 p-8 lg:px-6">
         <div className="flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
