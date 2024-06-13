@@ -1,6 +1,5 @@
 //Importar Express
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 const { API_VERSION } = require('./constants');
 
@@ -30,16 +29,18 @@ const parkingSpotRoutes = require('./router/parkingspot')
 // Agregar el router de los Payments o pagos
 const paymentRoutes = require('./router/payment')
 
+// Configurar Body Parser
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
-// Configure Body Parse
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
-// Configure Static Files
+// Configurar archivos estáticos
 app.use(express.static('uploads'));
 
-// Configure HTTP headers - CORS
-app.use(cors());
+// Configurar CORS
+app.use(cors({
+  credentials: true,
+  origin: ['http://localhost:5173', 'http://localhost:3977/api/v1'],
+}));
 
 // Configure routings
 // Agregar ruta de autorizacion a la configuración de Express
@@ -62,6 +63,11 @@ app.use(`/api/${API_VERSION}`, parkingSessionRoutes);
 app.use(`/api/${API_VERSION}`, parkingSpotRoutes);
 // Agregar el router de los pagos recibidos a la configuración de Express
 app.use(`/api/${API_VERSION}`, paymentRoutes);
+
+// En app.js, después de configurar las rutas
+app.get('/test', (req, res) => {
+  res.json('Test ok');
+});
 
 
 
