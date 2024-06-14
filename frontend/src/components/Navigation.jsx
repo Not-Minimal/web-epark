@@ -1,11 +1,22 @@
-import { Link } from "react-router-dom";
+// Navigation.jsx
+
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Navigation() {
+  const { logout } = useAuth();
+  const navigate = useNavigate(); // Aquí deberías poder usar useNavigate correctamente
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login"); // Redirige al usuario después de cerrar sesión
+  };
+
   return (
     <header className="flex h-16 w-full items-center justify-between bg-gray-900 px-4 md:px-6">
-      <a
+      <Link
+        to="/"
         className="flex items-center gap-2 text-lg font-semibold text-white"
-        href="/"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -26,7 +37,7 @@ export default function Navigation() {
           <path d="M12 19v3"></path>
         </svg>
         <span className="sr-only">Parking Dashboard</span>E-Park
-      </a>
+      </Link>
       <nav className="hidden gap-6 text-sm font-medium text-gray-400 md:flex">
         <Link
           to="/"
@@ -58,6 +69,12 @@ export default function Navigation() {
         >
           Configuración
         </Link>
+        <button
+          onClick={handleLogout}
+          className="inline-flex h-8 items-center justify-center rounded-md px-4 transition-colors hover:bg-gray-800 hover:text-gray-50 focus:bg-gray-800 focus:text-gray-50 focus:outline-none"
+        >
+          Cerrar Sesión
+        </button>
       </nav>
     </header>
   );

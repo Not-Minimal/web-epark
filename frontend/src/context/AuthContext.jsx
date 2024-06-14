@@ -1,4 +1,5 @@
-import React, { useState, useEffect, createContext } from "react";
+// AuthProvider.jsx
+import { useState, useEffect, createContext } from "react";
 import axios from "axios";
 
 export const AuthContext = createContext();
@@ -6,70 +7,76 @@ export const AuthContext = createContext();
 export function AuthProvider(props) {
   const { children } = props;
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(
-    () => localStorage.getItem("accessToken") || null
-  );
+  const [accessToken, setAccessToken] = useState(null);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      if (token) {
-        try {
-          const response = await axios.get(
-            "http://localhost:3977/api/v1/user/me",
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
+    const storedAccessToken = localStorage.getItem("accessToken");
+    if (storedAccessToken) {
+      setAccessToken(storedAccessToken);
+      fetchUser(storedAccessToken);
+    } else {
+      // No hay accessToken en localStorage, forzar cierre de sesión
+      logout();
+    }
+  }, []);
 
-          console.log("User data:", response.data);
-
-          setUser(response.data);
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-          handleLogout();
-        }
-      }
-    };
-
-    fetchUser();
-  }, [token]);
-
-  const login = async (accessToken) => {
-    setToken(accessToken);
-    localStorage.setItem("accessToken", accessToken);
-  };
-
-  const refreshToken = async () => {
+  const fetchUser = async (token) => {
     try {
-      const response = await axios.post("auth/refresh-token", {
-        refreshToken: localStorage.getItem("refreshToken"),
+      const response = await axios.get("http://localhost:3977/api/v1/user/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
-
-      const { accessToken } = response.data;
-      setToken(accessToken);
-      localStorage.setItem("accessToken", accessToken);
+      setUser(response.data);
+      console.log("User data:", response.data);
     } catch (error) {
-      console.error("Error refreshing token:", error);
-      handleLogout();
+      console.error("Error fetching user data:", error);
     }
   };
 
-  const handleLogout = () => {
+  const login = async (accessToken, refreshToken) => {
+    setAccessToken(accessToken);
+    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("refreshToken", refreshToken);
+    fetchUser(accessToken);
+  };
+
+  const logout = () => {
     setUser(null);
-    setToken(null);
+    setAccessToken(null);
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
   };
 
+  const refreshToken = async () => {
+    try {
+      const storedRefreshToken = localStorage.getItem("refreshToken");
+      const response = await axios.post("auth/refresh-token", {
+        refreshToken: storedRefreshToken,
+      });
+      const { newAccessToken } = response.data;
+      setAccessToken(newAccessToken);
+      localStorage.setItem("accessToken", newAccessToken);
+    } catch (error) {
+      console.error("Error refreshing token:", error);
+      logout(); // Logout del usuario si falla la renovación del token
+    }
+  };
+
+  const removeTokens = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    setUser(null);
+    setAccessToken(null);
+  };
+
   const data = {
-    accessToken: token,
+    accessToken,
     user,
     login,
-    logout: handleLogout,
+    logout,
     refreshToken,
-    removeTokens: handleLogout, // Para eliminar ambos tokens
+    removeTokens,
   };
 
   return <AuthContext.Provider value={data}>{children}</AuthContext.Provider>;
