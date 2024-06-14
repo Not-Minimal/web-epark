@@ -7,7 +7,7 @@ import { useAuth } from "@/hooks/useAuth";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useAuth();
+  const { login, refreshToken } = useAuth(); // Importa refreshToken desde useAuth
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -20,21 +20,23 @@ export default function Login() {
       });
       console.log("Usuario autenticado exitosamente:", response.data);
 
-      const { accessToken } = response.data;
+      const { accessToken, refreshToken: newRefreshToken } = response.data;
       login(accessToken);
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", newRefreshToken); // Guarda el nuevo refreshToken
+
       navigate("/dashboard");
-
-      // // Almacenar los tokens en localStorage
-      // localStorage.setItem("accessToken", response.data.accessToken);
-      // localStorage.setItem("refreshToken", response.data.refreshToken);
-
-      // Redirigir a una página protegida
     } catch (error) {
       console.error("Error al autenticar al usuario:", error);
       alert("Solicita tu acceso a epark@gmail.com");
       setError("Error al autenticar al usuario");
     }
   }
+
+  const handleRefreshToken = async () => {
+    await refreshToken(); // Llama a la función refreshToken del contexto de autenticación
+    // Aquí puedes continuar con la lógica de tu aplicación después de refrescar el token si es necesario
+  };
 
   return (
     <div className="flex flex-col min-h-screen ">

@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import axios from "axios";
 
 export const AuthContext = createContext();
@@ -6,7 +6,9 @@ export const AuthContext = createContext();
 export function AuthProvider(props) {
   const { children } = props;
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState(
+    () => localStorage.getItem("accessToken") || null
+  );
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -20,10 +22,13 @@ export function AuthProvider(props) {
               },
             }
           );
+
           console.log("User data:", response.data);
-          setUser(response.data); // Asumiendo que la respuesta contiene todos los datos del usuario
+
+          setUser(response.data);
         } catch (error) {
           console.error("Error fetching user data:", error);
+          handleLogout();
         }
       }
     };
@@ -33,21 +38,38 @@ export function AuthProvider(props) {
 
   const login = async (accessToken) => {
     setToken(accessToken);
-    console.log("Token de acceso:", accessToken);
+    localStorage.setItem("accessToken", accessToken);
   };
 
-  const logout = () => {
+  const refreshToken = async () => {
+    try {
+      const response = await axios.post("auth/refresh-token", {
+        refreshToken: localStorage.getItem("refreshToken"),
+      });
+
+      const { accessToken } = response.data;
+      setToken(accessToken);
+      localStorage.setItem("accessToken", accessToken);
+    } catch (error) {
+      console.error("Error refreshing token:", error);
+      handleLogout();
+    }
+  };
+
+  const handleLogout = () => {
     setUser(null);
     setToken(null);
-    console.log("Usuario desconectado exitosamente");
-    // Limpiar el token del almacenamiento local o de sesión si es necesario
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
   };
 
   const data = {
     accessToken: token,
     user,
     login,
-    logout,
+    logout: handleLogout,
+    refreshToken,
+    removeTokens: handleLogout, // Para eliminar ambos tokens
   };
 
   return <AuthContext.Provider value={data}>{children}</AuthContext.Provider>;
