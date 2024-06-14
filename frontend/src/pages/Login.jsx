@@ -2,31 +2,33 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login } = useAuth();
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   async function loginUser(e) {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:3977/api/v1/auth/login",
-        {
-          email,
-          password,
-        }
-      );
+      const response = await axios.post("auth/login", {
+        email,
+        password,
+      });
       console.log("Usuario autenticado exitosamente:", response.data);
 
-      // Almacenar los tokens en localStorage
-      localStorage.setItem("accessToken", response.data.accessToken);
-      localStorage.setItem("refreshToken", response.data.refreshToken);
+      const { accessToken } = response.data;
+      login(accessToken);
+      navigate("/dashboard");
+
+      // // Almacenar los tokens en localStorage
+      // localStorage.setItem("accessToken", response.data.accessToken);
+      // localStorage.setItem("refreshToken", response.data.refreshToken);
 
       // Redirigir a una página protegida
-      navigate("/orders");
     } catch (error) {
       console.error("Error al autenticar al usuario:", error);
       alert("Solicita tu acceso a epark@gmail.com");
