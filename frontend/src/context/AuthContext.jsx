@@ -1,6 +1,7 @@
-// AuthProvider.jsx
+// src/context/AuthContext.jsx
 import { useState, useEffect, createContext } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 
@@ -8,6 +9,7 @@ export function AuthProvider(props) {
   const { children } = props;
   const [user, setUser] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedAccessToken = localStorage.getItem("accessToken");
@@ -46,6 +48,7 @@ export function AuthProvider(props) {
     setAccessToken(null);
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
+    navigate("/login");
   };
 
   const refreshToken = async () => {
@@ -63,12 +66,7 @@ export function AuthProvider(props) {
     }
   };
 
-  const removeTokens = () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    setUser(null);
-    setAccessToken(null);
-  };
+  const isAuthenticated = () => !!accessToken;
 
   const data = {
     accessToken,
@@ -76,7 +74,7 @@ export function AuthProvider(props) {
     login,
     logout,
     refreshToken,
-    removeTokens,
+    isAuthenticated,
   };
 
   return <AuthContext.Provider value={data}>{children}</AuthContext.Provider>;

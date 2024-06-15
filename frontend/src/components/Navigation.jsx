@@ -1,15 +1,13 @@
-// Navigation.jsx
-
+// src/components/Navigation.jsx
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../hooks/useAuth"; // Asegúrate de que la ruta sea correcta
 
 export default function Navigation() {
-  const { logout } = useAuth();
-  const navigate = useNavigate(); // Aquí deberías poder usar useNavigate correctamente
+  const { logout } = useAuth(); // Obtenemos la función logout del contexto de autenticación
+  const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout();
-    navigate("/login"); // Redirige al usuario después de cerrar sesión
+    logout(navigate); // Llama a la función logout al hacer clic en el botón de cerrar sesión
   };
 
   return (
