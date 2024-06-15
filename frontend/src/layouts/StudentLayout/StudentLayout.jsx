@@ -1,15 +1,15 @@
 import PropTypes from "prop-types";
 
-export function AdminLayout(props) {
+export function StudentLayout(props) {
   const { children } = props;
   return (
     <div>
-      <h2>Usando Admin</h2>
+      <h2>Usando Estudiante</h2>
       {children}
     </div>
   );
 }
 
-AdminLayout.propTypes = {
+StudentLayout.propTypes = {
   children: PropTypes.node.isRequired,
 };

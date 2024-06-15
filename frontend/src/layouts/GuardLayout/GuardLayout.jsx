@@ -1,15 +1,15 @@
 import PropTypes from "prop-types";
 
-export function ClientLayout(props) {
+export function GuardLayout(props) {
   const { children } = props;
   return (
     <div>
-      <h2>Usando ClientLayout</h2>
+      <h2>Usando Guardia</h2>
       {children}
     </div>
   );
 }
 
-ClientLayout.propTypes = {
+GuardLayout.propTypes = {
   children: PropTypes.node.isRequired,
 };
