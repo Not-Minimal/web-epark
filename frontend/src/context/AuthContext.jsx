@@ -1,7 +1,6 @@
 // src/context/AuthContext.jsx
 import { useState, useEffect, createContext } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 
@@ -9,16 +8,12 @@ export function AuthProvider(props) {
   const { children } = props;
   const [user, setUser] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const storedAccessToken = localStorage.getItem("accessToken");
     if (storedAccessToken) {
       setAccessToken(storedAccessToken);
       fetchUser(storedAccessToken);
-    } else {
-      // No hay accessToken en localStorage, forzar cierre de sesión
-      logout();
     }
   }, []);
 
@@ -43,12 +38,12 @@ export function AuthProvider(props) {
     fetchUser(accessToken);
   };
 
-  const logout = () => {
+  const logout = (navigate) => {
     setUser(null);
     setAccessToken(null);
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
-    navigate("/login");
+    if (navigate) navigate("/login"); // Navegar a login si se proporciona navigate
   };
 
   const refreshToken = async () => {

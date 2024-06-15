@@ -13,8 +13,9 @@ import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import axios from "axios";
-import WithAuthRedirect from "./components/WithAuthRedirect";
 import PrivateRoute from "./components/PrivateRoute";
+import PublicRoute from "./components/PublicRoute";
+import { AuthProvider } from "./context/AuthContext";
 axios.defaults.baseURL = "http://localhost:3977/api/v1";
 
 // Layout component to wrap routes with Navigation
@@ -28,11 +29,32 @@ const Layout = ({ children }) => (
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Router>
-      <WithAuthRedirect>
+      <AuthProvider>
         <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route
+            path="/"
+            element={
+              <PublicRoute>
+                <Landing />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <PublicRoute>
+                <Login />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <PublicRoute>
+                <Signup />
+              </PublicRoute>
+            }
+          />
           <Route
             path="*"
             element={
@@ -50,7 +72,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             }
           />
         </Routes>
-      </WithAuthRedirect>
+      </AuthProvider>
     </Router>
   </React.StrictMode>
 );
