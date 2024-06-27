@@ -4,13 +4,15 @@ const { DB_USER, DB_PASSWORD, DB_HOST, IP_SERVER, API_VERSION } = require('./con
 
 const PORT = process.env.POST || 3977;
 
+// Conectar a la base de datos MongoDB
 mongoose.connect(
   `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/?retryWrites=true&w=majority&appName=web-epark`
 )
   .then(() => {
-    app.listen(PORT, () => { // Corrected 'port' to 'PORT'
+    // Iniciar el servidor una vez que la conexión a la base de datos sea exitosa
+    app.listen(PORT, () => {
       console.log("#############################################");
-      console.log("##### API RESTful#########");
+      console.log("##### API RESTful #########");
       console.log(`http://${IP_SERVER}:${PORT}/api/${API_VERSION}`);
     });
   })
