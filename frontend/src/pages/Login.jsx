@@ -33,11 +33,6 @@ export default function Login() {
     }
   }
 
-  const handleRefreshToken = async () => {
-    await refreshToken(); // Llama a la función refreshToken del contexto de autenticación
-    // Aquí puedes continuar con la lógica de tu aplicación después de refrescar el token si es necesario
-  };
-
   return (
     <div className="flex flex-col min-h-screen ">
       <header className="flex items-center justify-center  gap-2 p-8 lg:px-6">
